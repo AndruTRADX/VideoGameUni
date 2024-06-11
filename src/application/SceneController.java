@@ -12,6 +12,10 @@ public class SceneController {
 	public Scene scene;
 	public Parent parent;
 	
+	/**
+     * Cambia al menú principal del juego.
+     * @param event El evento de acción que desencadena este método.
+     */
 	public void switchToMainScene(ActionEvent event)
 	{
 		try {
@@ -25,6 +29,10 @@ public class SceneController {
 		}
 	}
 	
+	/**
+     * Cambia al la escena del juego MemoryGame.
+     * @param event El evento de acción que desencadena este método.
+     */
 	public void switchToScene1(ActionEvent event) 
 	{
 		try {
@@ -39,6 +47,10 @@ public class SceneController {
 		
 	}
 	
+	/**
+     * Cambia al la escena del juego FindThePairs.
+     * @param event El evento de acción que desencadena este método.
+     */
 	public void switchToScene2(ActionEvent event)
 	{
 		try {
@@ -53,6 +65,10 @@ public class SceneController {
 		}
 	}
 	
+	/**
+     * Cambia al la escena del juego MathGame.
+     * @param event El evento de acción que desencadena este método.
+     */
 	public void switchToScene3(ActionEvent event)
 	{
 		try {

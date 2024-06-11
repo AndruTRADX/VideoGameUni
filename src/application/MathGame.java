@@ -19,35 +19,32 @@ import javafx.stage.Stage;
 
 public class MathGame {
 
-    @FXML
-    private Text operationText;
-    @FXML
-    private TextField resultTextField;
-    @FXML
-    private Text correctText;
-    @FXML
-    private Text timeText;
-    @FXML
-    private Button sendButton;
-    @FXML
-    private Button backButton;
-    @FXML
-    private Button startButton;
+	// Elementos de la interfaz de usuario
+    @FXML public Text operationText;
+    @FXML public TextField resultTextField;
+    @FXML public Text correctText;
+    @FXML public Text timeText;
+    @FXML public Button sendButton;
+    @FXML public Button backButton;
+    @FXML public Button startButton;
 
-    private int attempts = 0;
-    
-    private long startTime;
-    
-    private boolean gameStarted = false;
+    // Variables de juego
+    public int attempts = 0;
+    public long startTime;
+    public boolean gameStarted = false;
+    public List<String> operations = new ArrayList<>();
+    public List<Integer> results = new ArrayList<>();
+    public Random random = new Random();
+    public Thread timerThread;
 
-    private List<String> operations = new ArrayList<>();
-    private List<Integer> results = new ArrayList<>();
-    private Random random = new Random();
-    private Thread timerThread;
-
+ // Escenario y escena
     public Stage stage;
     public Scene scene;
 
+    /**
+     * Cambia al menú principal del juego.
+     * @param event El evento de acción que desencadena este método.
+     */
     public void switchToMainScene(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
@@ -60,12 +57,19 @@ public class MathGame {
         }
     }
 
+    /**
+    * Inicializa el controlador del juego.
+    */
     public void initialize() {
         disableControls();
     }
 
+    /**
+     * Inicia el juego.
+     * @param event El evento de acción que desencadena este método.
+     */
     @FXML
-    private void startGame(ActionEvent event) {
+    public void startGame(ActionEvent event) {
     	resetGame();
         gameStarted = true;
         startButton.setText("Start Over");
@@ -75,8 +79,12 @@ public class MathGame {
         startTimer();
     }
 
+    /**
+     * Envía el resultado introducido por el jugador.
+     * @param event El evento de acción que desencadena este método.
+     */
     @FXML
-    private void sendResult(ActionEvent event) {
+    public void sendResult(ActionEvent event) {
     	
         String resultText = resultTextField.getText();
         try {
@@ -89,7 +97,6 @@ public class MathGame {
             }
             if (userResult == correctResult) {
                 attempts++;
-                correctText.setText("Correct!");
                 if (attempts == 10) {
                     endGame();
                 } else {
@@ -103,8 +110,10 @@ public class MathGame {
         }
     }
 
-
-    private void generateOperations() {
+    /**
+     * Genera las operaciones matemáticas aleatorias para el juego.
+     */
+    public void generateOperations() {
         operations.clear();
         results.clear();
         for (int i = 0; i < 10; i++) {
@@ -140,7 +149,10 @@ public class MathGame {
         generateNextOperation();
     }
 
-    private void generateNextOperation() {
+    /**
+     * Genera la operación matemática siguiente
+     */
+    public void generateNextOperation() {
         if (attempts < results.size()) {
             operationText.setText(operations.get(attempts));
             resultTextField.clear();
@@ -148,7 +160,10 @@ public class MathGame {
         }
     }
 
-    private void resetGame() {
+    /**
+     * Reinicia todos los parámetros del juego
+     */
+    public void resetGame() {
         gameStarted = false;
         attempts = 0;
         correctText.setText("");
@@ -161,7 +176,10 @@ public class MathGame {
         }
     }
 
-    private void endGame() {
+    /**
+     * Finaliza el juego y muestra los resultados en un Alert, con opción de jugar de nuevo.
+     */
+    public void endGame() {
         long endTime = System.currentTimeMillis();
         double totalTime = (endTime - startTime) / 1000.0;
 
@@ -191,20 +209,29 @@ public class MathGame {
         });
     }
 
-    private void enableControls() {
+    /**
+     * Habilita los controles del juego.
+     */
+    public void enableControls() {
         operationText.setVisible(true);
         resultTextField.setVisible(true);
         sendButton.setDisable(false);
         backButton.setDisable(false);
     }
 
-    private void disableControls() {
+    /**
+     * Deshabilita los controles del juego.
+     */
+    public void disableControls() {
         operationText.setVisible(false);
         resultTextField.setVisible(false);
         sendButton.setDisable(true);
     }
 
-    private void startTimer() {
+    /**
+     * Inicia el temporizador del juego.
+     */
+    public void startTimer() {
         timerThread = new Thread(() -> {
             while (gameStarted) {
                 try {

@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
-
 
 public class Main extends Application {
 	@Override
@@ -16,7 +14,11 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
+			
+			
+			// Dado a que no se trabajan estilos en linea, las proporciones del escenario no se deben mutar
+			// Facilitando la correcta estructura del juego
+			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

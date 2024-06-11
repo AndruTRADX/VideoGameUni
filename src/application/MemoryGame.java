@@ -21,24 +21,32 @@ import java.util.Random;
 
 public class MemoryGame {
 
-    @FXML private Button btn1;
-    @FXML private Button btn2;
-    @FXML private Button btn3;
-    @FXML private Button btn4;
-    @FXML private Button btn5;
-    @FXML private Button btn6;
-    @FXML private Button btn7;
-    @FXML private Button btn8;
-    @FXML private Button btn9;
+	// Botones del juego
+    @FXML public Button btn1;
+    @FXML public Button btn2;
+    @FXML public Button btn3;
+    @FXML public Button btn4;
+    @FXML public Button btn5;
+    @FXML public Button btn6;
+    @FXML public Button btn7;
+    @FXML public Button btn8;
+    @FXML public Button btn9;
 
+    // Listas para almacenar el patrón del juego y el patrón ingresado por el jugador
     public List<Integer> patron = new ArrayList<>();
     public List<Integer> patronPlayer = new ArrayList<>();
 
-    private Random random = new Random();
+    // Generador de números aleatorios
+    public Random random = new Random();
     
+    // Variables de la escena y el escenario
     public Stage stage;
 	public Scene scene;
     
+	/**
+     * Cambia al menú principal del juego.
+     * @param event El evento de acción que desencadena este método.
+     */
     public void switchToMainScene(ActionEvent event)
 	{
 		try {
@@ -52,9 +60,12 @@ public class MemoryGame {
 		}
 	}
 
+    /**
+     * Inicializa el controlador y asigna manejadores de eventos a los botones.
+     */
     @FXML
-    private void initialize() {
-        // Add event listeners to buttons
+    public void initialize() {
+    	// Asigna manejadores de eventos a los botones
         btn1.setOnAction(e -> handleButtonPress(1));
         btn2.setOnAction(e -> handleButtonPress(2));
         btn3.setOnAction(e -> handleButtonPress(3));
@@ -66,20 +77,29 @@ public class MemoryGame {
         btn9.setOnAction(e -> handleButtonPress(9));
     }
 
+    /**
+     * Inicia el juego, limpiando los patrones anteriores y comenzando un nuevo patrón.
+     */
     @FXML
-    private void startGame() {
+    public void startGame() {
         patron.clear();
         patronPlayer.clear();
         addRandomToPatron();
         displayPatronWithAnimation();
     }
 
-    private void addRandomToPatron() {
+    /**
+     * Añade un número aleatorio al patrón del juego.
+     */
+    public void addRandomToPatron() {
         int nextNumber = random.nextInt(9) + 1;
         patron.add(nextNumber);
     }
 
-    private void displayPatronWithAnimation() {
+    /**
+     * Muestra el patrón del juego con una animación.
+     */
+    public void displayPatronWithAnimation() {
         Timeline timeline = new Timeline();
         for (int i = 0; i < patron.size(); i++) {
             int num = patron.get(i);
@@ -95,7 +115,10 @@ public class MemoryGame {
         timeline.play();
     }
 
-    private void disableButtons() {
+    /**
+     * Deshabilita todos los botones.
+     */
+    public void disableButtons() {
         btn1.setDisable(true);
         btn2.setDisable(true);
         btn3.setDisable(true);
@@ -107,7 +130,10 @@ public class MemoryGame {
         btn9.setDisable(true);
     }
 
-    private void enableButtons() {
+    /**
+     * Habilita todos los botones.
+     */
+    public void enableButtons() {
         btn1.setDisable(false);
         btn2.setDisable(false);
         btn3.setDisable(false);
@@ -119,7 +145,11 @@ public class MemoryGame {
         btn9.setDisable(false);
     }
 
-    private void handleButtonPress(int num) {
+    /**
+     * Maneja la pulsación de un botón por parte del jugador.
+     * @param num El número del botón que fue presionado.
+     */
+    public void handleButtonPress(int num) {
         patronPlayer.add(num);
         if (patronPlayer.size() == patron.size()) {
             checkPatron();
@@ -134,7 +164,10 @@ public class MemoryGame {
         }
     }
 
-    private void checkPatron() {
+    /**
+     * Verifica si el patrón ingresado por el jugador es correcto.
+     */
+    public void checkPatron() {
         if (!patron.equals(patronPlayer)) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("¡Perdiste!");
@@ -148,7 +181,12 @@ public class MemoryGame {
         }
     }
 
-    private Button getButtonByNumber(int num) {
+    /**
+     * Obtiene el botón correspondiente al número dado.
+     * @param num El número del botón.
+     * @return El botón correspondiente.
+     */
+    public Button getButtonByNumber(int num) {
         switch (num) {
             case 1: return btn1;
             case 2: return btn2;
